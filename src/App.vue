@@ -30,10 +30,10 @@ import HelloWorld from './components/HelloWorld.vue'
 </style> -->
 
 <template>
-  <div id="app">
-    <header>
+<header>
       <h1>Document Management System</h1>
     </header>
+  <div id="app">
     <main>
       <router-view />
     </main>
@@ -53,17 +53,14 @@ export default {
 #app {
   font-family: Arial, sans-serif;
   text-align: center;
-  margin: 0 auto;
 }
 
 header {
-  background-color: #007bff;
   color: white;
   padding: 10px 0;
 }
 
 footer {
-  background-color: #f8f9fa;
   padding: 10px 0;
   margin-top: 20px;
 }

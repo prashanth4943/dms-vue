@@ -18,7 +18,7 @@
             id="firstName"
             v-model="formData.firstName"
             required
-            placeholder="Enter your first name"
+            placeholder=""
           />
         </div>
   
@@ -29,7 +29,7 @@
             id="lastName"
             v-model="formData.lastName"
             required
-            placeholder="Enter your last name"
+            placeholder=""
           />
         </div>
   
@@ -40,7 +40,7 @@
             id="email"
             v-model="formData.email"
             required
-            placeholder="Enter your email"
+            placeholder=""
           />
         </div>
   
@@ -51,11 +51,11 @@
             id="phone"
             v-model="formData.phone"
             required
-            placeholder="Enter your phone number"
+            placeholder=""
           />
         </div>
   
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn submitBtn">Submit</button>
       </form>
     </div>
   </template>
@@ -116,7 +116,6 @@
     max-width: 500px;
     margin: 20px auto;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
