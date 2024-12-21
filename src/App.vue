@@ -30,14 +30,16 @@ import HelloWorld from './components/HelloWorld.vue'
 </style> -->
 
 <template>
-  <div>
-    <nav>
-      <ul>
-        <li><router-link to="/home">Home</router-link></li>
-        <li><router-link to="/about">About</router-link></li>
-      </ul>
-    </nav>
-    <router-view></router-view>  <!-- Display the current route's component -->
+  <div id="app">
+    <header>
+      <h1>Document Management System</h1>
+    </header>
+    <main>
+      <router-view />
+    </main>
+    <footer>
+      <p>&copy; 2024 Document Management System. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
@@ -46,3 +48,24 @@ export default {
   name: 'App',
 };
 </script>
+
+<style>
+#app {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 0;
+}
+
+footer {
+  background-color: #f8f9fa;
+  padding: 10px 0;
+  margin-top: 20px;
+}
+</style>
+
