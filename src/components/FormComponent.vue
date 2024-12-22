@@ -88,12 +88,13 @@
   
         try {
           // Send form data to the backend
-          const response = await fetch('http://localhost:8080/api/storePII', {
+          const response = await fetch('http://localhost:8080/storePIDetails', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.formData)
+            body: JSON.stringify(this.formData),
+            credentials: "include", 
           });
   
           if (!response.ok) {
