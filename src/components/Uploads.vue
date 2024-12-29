@@ -43,80 +43,103 @@
         {{ errorMessage }}
       </div>
     </div>
+    <FileListComponent/>
   </template>
   
   <script>
-  export default {
-    data() {
-      return {
-        dragging: false,
-        file: null, // Holds the selected file
-        filePreview: null, // Holds the preview URL
-        successMessage: "",
-        errorMessage: "",
-      };
-    },
-    methods: {
-      async uploadFile(file) {
-        const formData = new FormData();
-        formData.append("file", file);
-  
-        try {
-          const response = await fetch("http://localhost:8080/upload", {
-            method: "POST",
-            body: formData,
-          });
-  
-          if (response.ok) {
-            this.successMessage = "File uploaded successfully!";
-            this.errorMessage = "";
-            this.clearFile(); // Clear file after upload
-          } else {
-            this.successMessage = "";
-            this.errorMessage = "Failed to upload file.";
-          }
-        } catch (error) {
-          this.successMessage = "";
-          this.errorMessage = "Error: Could not connect to the server.";
-        }
-      },
-      handleFileInput(event) {
-        const file = event.target.files[0];
-        if (file) {
-          this.previewFile(file);
-        }
-      },
-      handleDrop(event) {
-        this.dragging = false;
-        const file = event.dataTransfer.files[0];
-        if (file) {
-          this.previewFile(file);
-        }
-      },
-      previewFile(file) {
-        this.file = file;
-        if (this.isImage(file)) {
-          this.filePreview = URL.createObjectURL(file); // Create a preview URL for images
+import { useUserStore } from "../utils/store"; // Import your Pinia store
+import api from '../utils/api'; 
+import FileListComponent from './FileListComponent.vue';
+
+export default {
+  name: 'Uploads',
+  components: {
+    FileListComponent, 
+  },
+  data() {
+    return {
+      dragging: false,
+      file: null, // Holds the selected file
+      filePreview: null, // Holds the preview URL
+      successMessage: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    async uploadFile(file) {
+      const userStore = useUserStore(); // Access the Pinia store
+      const email = userStore.email; // Fetch the user's email from the store
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileName", file.name);
+      formData.append("fileType", file.type);
+      formData.append("fileSize", file.size); // Add metadata
+      formData.append("email", email); // Add user email
+
+      try {
+        const response = await api.post("/upload", formData , {
+            headers: {
+            "Content-Type": "multipart/form-data", // Explicitly tell the server it's a multipart request
+            },
+        });
+
+        if (response.status === 200) {
+      this.successMessage = "File uploaded successfully!";
+      this.errorMessage = "";
+      this.clearFile(); // Clear file after upload
+    } else {
+      this.successMessage = "";
+      this.errorMessage = "Failed to upload file.";
+    }
+      } catch (error) {
+        this.successMessage = "";
+        if (error.response) {
+            this.errorMessage = `Error: ${error.response.data.message || "Failed to upload file."}`;
+        } else if (error.request) {
+            this.errorMessage = "Error: No response received from the server.";
         } else {
-          this.filePreview = null;
+            this.errorMessage = "Error: Could not connect to the server.";
         }
-      },
-      clearFile() {
-        this.file = null;
-        this.filePreview = null;
-  
-        // Reset file input
-        const fileInput = this.$refs.fileInput;
-        if (fileInput) {
-          fileInput.value = null;
-        }
-      },
-      isImage(file) {
-        return file.type.startsWith("image/");
-      },
+      }
     },
-  };
-  </script>
+    handleFileInput(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.previewFile(file);
+      }
+    },
+    handleDrop(event) {
+      this.dragging = false;
+      const file = event.dataTransfer.files[0];
+      if (file) {
+        this.previewFile(file);
+      }
+    },
+    previewFile(file) {
+      this.file = file;
+      if (this.isImage(file)) {
+        this.filePreview = URL.createObjectURL(file); // Create a preview URL for images
+      } else {
+        this.filePreview = null;
+      }
+    },
+    clearFile() {
+      this.file = null;
+      this.filePreview = null;
+
+      // Reset file input
+      const fileInput = this.$refs.fileInput;
+      if (fileInput) {
+        fileInput.value = null;
+      }
+    },
+    isImage(file) {
+      return file.type.startsWith("image/");
+    },
+  },
+};
+</script>
   
   <style scoped>
   .upload-container {

@@ -61,57 +61,65 @@
   </template>
   
   <script>
-  export default {
-    name: 'FormComponent',
-    data() {
-      return {
-        formData: {
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: ''
-        }
-      };
-    },
-    methods: {
-      async handleSubmit() {
-        // Simple form validation
-        if (
-          !this.formData.firstName ||
-          !this.formData.lastName ||
-          !this.formData.email ||
-          !this.formData.phone
-        ) {
-          alert('All fields are required!');
-          return;
-        }
-  
-        try {
-          // Send form data to the backend
-          const response = await fetch('http://localhost:8080/storePIDetails', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.formData),
-            credentials: "include", 
-          });
-  
-          if (!response.ok) {
-            throw new Error('Failed to submit data');
-          }
-  
-          // Navigate to the /uploads route after successful submission
-          this.$router.push('/uploads');
-        } catch (error) {
-          console.error('Error:', error);
-          alert('Something went wrong. Please try again.');
-        }
+import api from '../utils/api'; // Import the centralized Axios instance
+import { useUserStore } from '../utils/store';
+export default {
+  name: 'FormComponent',
+  data() {
+    return {
+      formData: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: ''
       }
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      if (
+        !this.formData.firstName ||
+        !this.formData.lastName ||
+        !this.formData.email ||
+        !this.formData.phone
+      ) {
+        alert('All fields are required!');
+        return;
+      }
+
+      try {
+      const response = await api.post('/storePIDetails', this.formData);
+      console.log(response.data.success)
+      if (response.data.success) {
+        const filesExist = response.data.fileExists;
+      console.log(response.data)
+        
+        const userStore = useUserStore();
+        userStore.setEmail(this.formData.email);
+        console.log('User email set in store:', userStore.email);
+
+        if (filesExist) {
+          console.log("sucesdddsf")
+          const uploadedFilesResponse = await api.get(`/getUploadedFiles/${this.formData.email}`);
+          const uploadedFiles = uploadedFilesResponse.data;
+          
+          
+          userStore.setUploadedFiles(uploadedFiles); 
+        }
+
+        this.$router.push('/uploads');
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong. Please try again.');
     }
-  };
-  </script>
-  
+    }
+  }
+};
+</script>
+
   <style>
   .form-container {
     max-width: 500px;
