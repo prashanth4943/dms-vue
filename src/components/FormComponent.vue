@@ -1,6 +1,6 @@
 <template>
     <div class="form-container">
-      <h2>Welcome to Document Management System</h2>
+      <h2 class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center gap-x-4">Welcome to Document Management System</h2>
       <p>
       Your all-in-one platform to securely manage, organize, and access your documents
       anytime, anywhere. We strive to make document management effortless for you!
