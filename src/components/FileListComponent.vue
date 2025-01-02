@@ -3,7 +3,7 @@
       <RouterLink to="/uploads"><h2>Upload new file</h2></RouterLink>
       <h2>Uploaded Files</h2>
       <button class="search-toggle-btn" @click="toggleSearchBar">
-      Search
+      {{ searchButtonText }}
     </button>
     <div v-if="showSearchBar" class="search-bar">
       <input 
@@ -13,6 +13,9 @@
         @input="searchFiles"
       />
     </div>
+    <div v-if="filteredFiles.length === 0">
+    <p class="no-files-message">No files matched your search. Try a different query!</p>
+  </div>
       <div v-if="hasSelectedFiles" class="action-row">
       <button @click="selectAllFiles">Select All</button>
       <button @click="deselectAllFiles">Deselect All</button>
@@ -121,9 +124,14 @@
       const thumbnailErrors = ref({});
       const isEmailModalVisible = ref(false)
       const selectedFileID = ref(null)
+      const searchButtonText = ref('Search');
 
       const toggleSearchBar = () => {
+        if (showSearchBar.value) {
+        searchQuery.value = '';
+      }
       showSearchBar.value = !showSearchBar.value;
+      searchButtonText.value = showSearchBar.value ? 'Close' : 'Search'; 
       };
 
       const selectAllFiles = () => {
@@ -500,6 +508,7 @@
         openEmailModal,
         closeEmailModal,
         shareFile,
+        searchButtonText,
         // toggleFileSelection,
       };
     }
@@ -726,5 +735,11 @@
   display: flex;
 }
 
+.no-files-message {
+  color: #888;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}
   </style>
   
