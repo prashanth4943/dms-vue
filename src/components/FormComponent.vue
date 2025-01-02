@@ -119,13 +119,20 @@ export default {
           }
         } else {
           // alert(response.data.message || 'Something went wrong. Please try again.');
-          this.errorMessage = response.data.message || 'Something went wrong. Please try again.';
+          this.displayErrorMessage(response.data.message || 'Something went wrong. Please try again.');
         }
       } catch (error) {
         console.error('Error:', error);
         // alert(error.response?.data?.message || 'Something went wrong. Please try again.');
-        this.errorMessage = error.response?.data?.message || 'Something went wrong. Please try again.';
+        this.displayErrorMessage(error.response?.data?.message || 'Something went wrong. Please try again.');
       }
+    },
+    displayErrorMessage(message) {
+      this.errorMessage = message;
+      // Clear the error message after 10 seconds
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 5000);
     }
   }
 };

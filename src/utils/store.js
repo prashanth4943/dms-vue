@@ -11,6 +11,10 @@ export const useUserStore = defineStore('user', {
     },
     setUploadedFiles(files) {
       this.uploadedFiles = files; // Update the uploadedFiles array
+    },
+    reset() {
+      this.email = null;
+      this.uploadedFiles = []; 
     }
   },
 });
