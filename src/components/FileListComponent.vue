@@ -1,5 +1,6 @@
 <template>
     <div class="file-list-container">
+      <RouterLink to="/uploads"><h2>Upload new file</h2></RouterLink>
       <h2>Uploaded Files</h2>
       <button class="search-toggle-btn" @click="toggleSearchBar">
       Search
@@ -62,6 +63,11 @@
             :class="['icon', 'delete-icon', { disabled: loadingState[file.FileID] }]"
             @click="!loadingState[file.FileID] && deleteFile(file.FileID)"
           />
+          <font-awesome-icon
+            :icon="['fas', 'trash-alt']"
+            :class="['icon', 'share-icon', { disabled: loadingState[file.FileID] }]"
+            @click="!loadingState[file.FileID] && openEmailModal(file.FileID)"
+          />
         </div>
           <a :href="file.OCIReference" target="_blank" class="file-link">View File</a>
         </li>
@@ -77,6 +83,12 @@
     <p>No files uploaded yet.</p>
   </div>
     </div>
+    <EmailComponent
+      v-if="isEmailModalVisible"
+      :visible="isEmailModalVisible"
+      :fileID="selectedFileID"
+      @close="closeEmailModal"
+    />
   </template>
   <script>
   import { defineComponent, computed, onMounted , ref} from 'vue';
@@ -84,9 +96,13 @@
   import { useToast } from "vue-toastification";
   import api from '../utils/api'; // Import the Axios instance or api helper
   import Swal from 'sweetalert2';
+  import EmailComponent from './EmailComponent.vue';
   
   export default defineComponent({
     name: 'FileListComponent',
+    components: {
+    EmailComponent,
+  },
     
     setup() {
       const userStore = useUserStore();
@@ -103,6 +119,8 @@
       const filesPerPage = ref(5);
       const fileThumbnails = ref({});
       const thumbnailErrors = ref({});
+      const isEmailModalVisible = ref(false)
+      const selectedFileID = ref(null)
 
       const toggleSearchBar = () => {
       showSearchBar.value = !showSearchBar.value;
@@ -143,6 +161,72 @@
        const searchFiles = () => {
       console.log('Searching files for:', searchQuery.value);
       };
+
+       const openEmailModal = (fileID) => {
+        console.log("dsdfsdfsdffsd")
+        console.log(fileID)
+        selectedFileID.value = fileID;
+        console.log(selectedFileID.value)
+        console.log(isEmailModalVisible.value)
+        isEmailModalVisible.value = true;
+        console.log(isEmailModalVisible.value)
+       }
+        
+       const closeEmailModal = () => {
+        selectedFileID.value = null;
+        console.log("dfdfdfdf")
+        isEmailModalVisible.value = false;
+       }
+// -----------------------------------------------------------
+       const shareFile = (fileID) => {
+        selectedFileID.value = fileID;
+   
+        // Open SweetAlert2 modal
+        Swal.fire({
+          title: 'Send Email',
+          html: `
+            <div>
+              <label for="to">Recipient Email:</label>
+              <input id="to" type="email" class="swal2-input" placeholder="Enter email">
+              <label for="subject">Subject:</label>
+              <input id="subject" type="text" class="swal2-input" placeholder="Enter subject">
+              <label for="message">Message (Optional):</label>
+              <textarea id="message" class="swal2-textarea" placeholder="Enter message"></textarea>
+            </div>
+          `,
+          focusConfirm: false,
+          showCancelButton: true,
+          confirmButtonText: 'Send',
+          preConfirm: () => {
+            const to = document.getElementById('to').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+   
+            if (!to || !subject) {
+              Swal.showValidationMessage('Recipient Email and Subject are required!');
+              return false;
+            }
+   
+            return { to, subject, message };
+          },
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const { to, subject, message } = result.value;
+              await api.post('/SendEmail', {
+                to,
+                subject,
+                message,
+                fileID: selectedFileID.value,
+              });
+              Swal.fire('Success', 'Email sent successfully!', 'success');
+            } catch (error) {
+              Swal.fire('Error', 'Failed to send email.', 'error');
+            }
+          }
+        });
+      };
+
       // ------------------functions/methods---------------------
       // Only fetch files if they are not in the store (optional)
       const fetchUploadedFiles = async () => {
@@ -411,6 +495,11 @@
         thumbnailErrors,
         fetchThumbnail,
         viewFile,
+        selectedFileID,
+        isEmailModalVisible,
+        openEmailModal,
+        closeEmailModal,
+        shareFile,
         // toggleFileSelection,
       };
     }

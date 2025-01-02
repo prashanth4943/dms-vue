@@ -107,7 +107,7 @@ export default {
           userStore.setUploadedFiles(uploadedFiles); 
         }
 
-        this.$router.push('/uploads');
+        this.$router.push('/filelist');
       } else {
         alert('Something went wrong. Please try again.');
       }

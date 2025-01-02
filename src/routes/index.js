@@ -3,12 +3,14 @@ import Home from '../components/Home.vue';
 import About from '../components/About.vue';
 import FormComponent from '../components/FormComponent.vue';
 import Uploads from '../components/Uploads.vue';
+import FileListComponent from '../components/FileListComponent.vue';
 
 // Define routes
 const routes = [
   { path: '/', component: FormComponent },
   { path: '/home', component: Home },
   { path: '/about', component: About },
+  { path: '/filelist', component: FileListComponent },
   { path: '/uploads', component: Uploads }
 ];
 

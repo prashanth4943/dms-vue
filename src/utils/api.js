@@ -3,8 +3,8 @@ import router from '../routes/index'; // Import your Vue Router instance
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:8081', // Replace with your backend base URL
-//   timeout: 5000, // Optional timeout
+  baseURL: 'http://localhost:8081/', // Replace with your backend base URL
+  timeout: 5000, // Optional timeout
   withCredentials: true,
 });
 
