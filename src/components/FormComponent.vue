@@ -55,7 +55,7 @@
       </div>
 
       <!-- Show additional fields for signup -->
-     
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
       <button type="submit">{{ isSignup ? 'Sign Up' : 'Login' }}</button>
 
@@ -81,7 +81,8 @@ export default {
         password: '',
         firstName: '', // Only used in signup
         lastName: '' // Only used in signup
-      }
+      },
+      errorMessage: ''
     };
   },
   methods: {
@@ -117,11 +118,13 @@ export default {
             this.$router.push('/filelist');
           }
         } else {
-          alert(response.data.message || 'Something went wrong. Please try again.');
+          // alert(response.data.message || 'Something went wrong. Please try again.');
+          this.errorMessage = response.data.message || 'Something went wrong. Please try again.';
         }
       } catch (error) {
         console.error('Error:', error);
-        alert(error.response?.data?.message || 'Something went wrong. Please try again.');
+        // alert(error.response?.data?.message || 'Something went wrong. Please try again.');
+        this.errorMessage = error.response?.data?.message || 'Something went wrong. Please try again.';
       }
     }
   }
@@ -174,6 +177,10 @@ export default {
 }
 .toggle-text span {
   text-decoration: underline;
+}
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
   </style>
   
