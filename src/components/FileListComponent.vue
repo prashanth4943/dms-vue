@@ -44,12 +44,12 @@
               alt="File Thumbnail"
               class="file-thumbnail"
             />
-            <!-- <img
+            <img
               v-else-if="thumbnailErrors[file.FileID]"
-              src="/path/to/no-thumbnail.png"
+              src="/public/default_image.png"
               alt="No Thumbnail"
               class="file-thumbnail-error"
-            /> -->
+            />
             <div v-else class="thumbnail-loader">Loading...</div>
             <div class="hover-overlay">Click to View</div>
         </div>
@@ -69,7 +69,7 @@
           <font-awesome-icon
             :icon="['fas', 'trash-alt']"
             :class="['icon', 'share-icon', { disabled: loadingState[file.FileID] }]"
-            @click="!loadingState[file.FileID] && openEmailModal(file.FileID)"
+            @click="!loadingState[file.FileID] && shareFile(file.FileID)"
           />
         </div>
           <a :href="file.OCIReference" target="_blank" class="file-link">View File</a>

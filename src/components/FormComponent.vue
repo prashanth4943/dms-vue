@@ -1,16 +1,15 @@
 <template>
-    <div class="form-container">
-      <h2 class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center gap-x-4">Welcome to Document Management System</h2>
-      <p>
+  <div class="form-container">
+    <h2 class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center gap-x-4">
+      Welcome to Document Management System
+    </h2>
+    <p>
       Your all-in-one platform to securely manage, organize, and access your documents
       anytime, anywhere. We strive to make document management effortless for you!
     </p>
-    <p>
-      Please fill out the form below to get started. This will allow us to personalize your experience
-      and provide you with the best tools for managing your important files.
-    </p>
-  
-      <form @submit.prevent="handleSubmit">
+
+    <form @submit.prevent="handleSubmit">
+      <div v-if="isSignup">
         <div class="form-group">
           <label for="firstName">First Name:</label>
           <input
@@ -21,7 +20,7 @@
             placeholder="Enter your first name"
           />
         </div>
-  
+
         <div class="form-group">
           <label for="lastName">Last Name:</label>
           <input
@@ -32,89 +31,98 @@
             placeholder="Enter your last name"
           />
         </div>
-  
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            v-model="formData.email"
-            required
-            placeholder="Enter your email"
-          />
-        </div>
-  
-        <div class="form-group">
-          <label for="phone">Phone:</label>
-          <input
-            type="tel"
-            id="phone"
-            v-model="formData.phone"
-            required
-            placeholder="Enter your phone number"
-          />
-        </div>
-  
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-import api from '../utils/api'; // Import the centralized Axios instance
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          v-model="formData.email"
+          required
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          v-model="formData.password"
+          required
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <!-- Show additional fields for signup -->
+     
+
+      <button type="submit">{{ isSignup ? 'Sign Up' : 'Login' }}</button>
+
+      <p class="toggle-mode">
+        {{ isSignup ? 'Already have an account?' : "Don't have an account?" }}
+        <span @click="toggleMode">{{ isSignup ? 'Login' : 'Sign up' }}</span>
+      </p>
+    </form>
+  </div>
+</template>
+
+<script>
+import api from '../utils/api';
 import { useUserStore } from '../utils/store';
+
 export default {
-  name: 'FormComponent',
+  name: 'AuthComponent',
   data() {
     return {
+      isSignup: false, // Toggle between login and signup modes
       formData: {
-        firstName: '',
-        lastName: '',
         email: '',
-        phone: ''
+        password: '',
+        firstName: '', // Only used in signup
+        lastName: '' // Only used in signup
       }
     };
   },
   methods: {
-    async handleSubmit() {
-      if (
-        !this.formData.firstName ||
-        !this.formData.lastName ||
-        !this.formData.email ||
-        !this.formData.phone
-      ) {
-        alert('All fields are required!');
-        return;
+    toggleMode() {
+      this.isSignup = !this.isSignup;
+      // Clear extra fields when switching modes
+      if (!this.isSignup) {
+        this.formData.firstName = '';
+        this.formData.lastName = '';
       }
+    },
+    async handleSubmit() {
+      const payload = { ...this.formData, isSignup: this.isSignup };
 
       try {
-      const response = await api.post('/storePIDetails', this.formData);
-      console.log(response.data.success)
-      if (response.data.success) {
-        const filesExist = response.data.fileExists;
-      console.log(response.data)
-        
-        const userStore = useUserStore();
-        userStore.setEmail(this.formData.email);
-        console.log('User email set in store:', userStore.email);
+        const response = await api.post('/storePIDetails', payload);
 
-        if (filesExist) {
-          console.log("sucesdddsf")
-          const uploadedFilesResponse = await api.get(`/getUploadedFiles/${this.formData.email}`);
-          const uploadedFiles = uploadedFilesResponse.data;
-          
-          
-          userStore.setUploadedFiles(uploadedFiles); 
+        if (response.data.success) {
+          const userStore = useUserStore();
+          userStore.setEmail(this.formData.email);
+
+          if (this.isSignup) {
+            alert('Signup successful! Please log in.');
+            this.toggleMode(); // Switch to login mode
+          } else {
+            const filesExist = response.data.fileExists;
+
+            if (filesExist) {
+              const uploadedFilesResponse = await api.get(`/getUploadedFiles/${this.formData.email}`);
+              userStore.setUploadedFiles(uploadedFilesResponse.data);
+            }
+
+            this.$router.push('/filelist');
+          }
+        } else {
+          alert(response.data.message || 'Something went wrong. Please try again.');
         }
-
-        this.$router.push('/filelist');
-      } else {
-        alert('Something went wrong. Please try again.');
+      } catch (error) {
+        console.error('Error:', error);
+        alert(error.response?.data?.message || 'Something went wrong. Please try again.');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Something went wrong. Please try again.');
-    }
     }
   }
 };
@@ -159,5 +167,13 @@ export default {
   button:hover {
     background-color: #0056b3;
   }
+  toggle-text {
+  color: blue;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.toggle-text span {
+  text-decoration: underline;
+}
   </style>
   
