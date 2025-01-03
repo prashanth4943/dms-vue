@@ -46,7 +46,7 @@
             />
             <img
               v-else-if="thumbnailErrors[file.FileID]"
-              src="/public/default_image.png"
+              src="/default_image.png"
               alt="No Thumbnail"
               class="file-thumbnail-error"
             />

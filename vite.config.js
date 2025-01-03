@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 // export default defineConfig({
 //   plugins: [vue()],
 // })
-export default {
+export default defineConfig({
   plugins: [vue()],
   server: {
     proxy: {
@@ -16,4 +16,4 @@ export default {
       },
     },
   },
-};
+});
