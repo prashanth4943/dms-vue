@@ -17,11 +17,16 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         serif: ['Lora', 'serif'],
+        damion: ['"Damion"', 'cursive'],
+        hurricane:['Hurricane','serif'],
       },
       borderRadius: {
         DEFAULT: '8px', 
         large: '12px',  
       },
+      backgroundImage: {
+        'hero-pattern': "url('/bg-img.jpg')",
+      }
     },
   },
   plugins: [],

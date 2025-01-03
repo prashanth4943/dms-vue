@@ -1,70 +1,73 @@
 <template>
-  <div class="form-container">
-    <h2 class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center gap-x-4">
-      Welcome to Document Management System
-    </h2>
-    <p>
-      Your all-in-one platform to securely manage, organize, and access your documents
-      anytime, anywhere. We strive to make document management effortless for you!
-    </p>
-
-    <form @submit.prevent="handleSubmit">
-      <div v-if="isSignup">
-        <div class="form-group">
-          <label for="firstName">First Name:</label>
-          <input
-            type="text"
-            id="firstName"
-            v-model="formData.firstName"
-            required
-            placeholder="Enter your first name"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="lastName">Last Name:</label>
-          <input
-            type="text"
-            id="lastName"
-            v-model="formData.lastName"
-            required
-            placeholder="Enter your last name"
-          />
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          v-model="formData.email"
-          required
-          placeholder="Enter your email"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          v-model="formData.password"
-          required
-          placeholder="Enter your password"
-        />
-      </div>
-
-      <!-- Show additional fields for signup -->
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-
-      <button type="submit">{{ isSignup ? 'Sign Up' : 'Login' }}</button>
-
-      <p class="toggle-mode">
-        {{ isSignup ? 'Already have an account?' : "Don't have an account?" }}
-        <span @click="toggleMode">{{ isSignup ? 'Login' : 'Sign up' }}</span>
+  <section class="flex flex-col justify-center bg-hero-pattern bg-center h-screen transition-opacity duration-300">
+  <div class="grid grid-cols-2 gap-4">
+    <div class="flex flex-col justify-center">
+        <h2 class="p-6 max-w-sm mx-auto gap-x-4 font-semibold text-8xl font-damion">
+          Archivio
+      </h2>
+      <p class="text-white font-semibold text-xl font-hurricane">
+        Your all-in-one platform to securely manage, organize, and access your documents
+        anytime, anywhere. We strive to make document management effortless for you!
       </p>
-    </form>
+    </div>
+    <div class="">
+      <div class="form-container">
+          <form @submit.prevent="handleSubmit">
+            <div v-if="isSignup">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="firstName"
+                  v-model="formData.firstName"
+                  required
+                  placeholder="Enter your first name"
+                />
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="lastName"
+                  v-model="formData.lastName"
+                  required
+                  placeholder="Enter your last name"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                id="email"
+                v-model="formData.email"
+                required
+                placeholder="Enter your email"
+              />
+            </div>
+
+            <div class="form-group">
+              <input
+                type="password"
+                id="password"
+                v-model="formData.password"
+                required
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <!-- Show additional fields for signup -->
+            <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+            <button type="submit" class="bg-accent w-full mb-4 mt-4">{{ isSignup ? 'Sign Up' : 'Login' }}</button>
+
+            <p class="toggle-mode text-white">
+              {{ isSignup ? 'Already have an account?' : "Don't have an account?" }}
+              <span class="cursor-pointer" @click="toggleMode">{{ isSignup ? 'Login' : 'Sign up' }}</span>
+            </p>
+          </form>
+      </div>
+    </div>
   </div>
+</section>
 </template>
 
 <script>
@@ -166,7 +169,7 @@ export default {
   }
   
   button {
-    background-color: #007bff;
+    /* background-color: #007bff; */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -174,9 +177,9 @@ export default {
     cursor: pointer;
   }
   
-  button:hover {
+  /* button:hover {
     background-color: #0056b3;
-  }
+  } */
   toggle-text {
   color: blue;
   cursor: pointer;

@@ -31,15 +31,9 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <div id="app">
-    <header>
-      <h1>Document Management System</h1>
-    </header>
     <main>
       <router-view />
     </main>
-    <footer>
-      <p>&copy; 2024 Document Management System. All rights reserved.</p>
-    </footer>
   </div>
 </template>
 
@@ -53,7 +47,8 @@ export default {
 #app {
   font-family: Arial, sans-serif;
   text-align: center;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  width: 100%;
 }
 
 header {
