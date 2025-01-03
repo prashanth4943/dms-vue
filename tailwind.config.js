@@ -19,6 +19,8 @@ export default {
         serif: ['Lora', 'serif'],
         damion: ['"Damion"', 'cursive'],
         hurricane:['Hurricane','serif'],
+        sans: ['"Playfair Display"', 'serif'], // Thin and Roman serif
+        serif: ['"Crimson Text"', 'serif'],  
       },
       borderRadius: {
         DEFAULT: '8px', 

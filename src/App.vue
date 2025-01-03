@@ -31,9 +31,11 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <div id="app">
+
     <main>
       <router-view />
     </main>
+
   </div>
 </template>
 
@@ -51,7 +53,7 @@ export default {
   width: 100%;
 }
 
-header {
+/* header {
   background-color: #007bff;
   color: white;
   padding: 10px 0;
@@ -61,6 +63,6 @@ footer {
   background-color: #f8f9fa;
   padding: 10px 0;
   margin-top: 20px;
-}
+} */
 </style>
 
