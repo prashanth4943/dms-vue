@@ -15,8 +15,8 @@ export default {
         text: '#5C534D',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Lora', 'serif'],
+        sans: ['"Playfair Display"', 'serif'], // Thin and Roman serif
+        serif: ['"Crimson Text"', 'serif'],  
       },
       borderRadius: {
         DEFAULT: '8px', 

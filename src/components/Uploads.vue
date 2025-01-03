@@ -10,7 +10,7 @@
 
     <!-- Upload Container -->
     <div class="upload-container max-w-2xl mx-auto mt-8 p-6 bg-white shadow-md border border-primary rounded-large">
-      <h1 class="text-2xl font-bold mb-4 text-primary">Upload Your Document</h1>
+      <h1 class="text-2xl font-serif font-bold mb-4 text-primary">Upload Your Document</h1>
       <p class="text-neutralDark mb-6">
         Drag and drop your file here or click the button below to upload.
       </p>

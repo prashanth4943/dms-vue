@@ -31,15 +31,11 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <div id="app">
-    <header>
-      <h1>Document Management System</h1>
-    </header>
+
     <main>
       <router-view />
     </main>
-    <footer>
-      <p>&copy; 2024 Document Management System. All rights reserved.</p>
-    </footer>
+
   </div>
 </template>
 
@@ -56,7 +52,7 @@ export default {
   margin: 0 auto;
 }
 
-header {
+/* header {
   background-color: #007bff;
   color: white;
   padding: 10px 0;
@@ -66,6 +62,6 @@ footer {
   background-color: #f8f9fa;
   padding: 10px 0;
   margin-top: 20px;
-}
+} */
 </style>
 
