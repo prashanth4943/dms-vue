@@ -69,6 +69,7 @@
       </div>
     </div>
   </div>
+  <FooterComponent/>
 </template>
 
   <script>
@@ -78,12 +79,14 @@ import FileListComponent from './FileListComponent.vue';
 import Swal from 'sweetalert2';
 // import HeaderComponent from "./HeaderComponent.vue";
 import HeaderComponent from "./HeaderComponent.vue";
+import FooterComponent from "./FooterComponent.vue";
 
 export default {
   name: 'Uploads',
   components: {
     FileListComponent, 
     HeaderComponent,
+    FooterComponent
   },
   data() {
     return {

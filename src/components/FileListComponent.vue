@@ -195,6 +195,7 @@
     <p>No files uploaded yet.</p>
   </div>
     </div>
+    <FooterComponent/>
     <EmailComponent
       v-if="isEmailModalVisible"
       :visible="isEmailModalVisible"
@@ -210,12 +211,14 @@
   import Swal from 'sweetalert2';
   import EmailComponent from './EmailComponent.vue';
   import HeaderComponent from './HeaderComponent.vue';
+import FooterComponent from './FooterComponent.vue';
   
   export default defineComponent({
     name: 'FileListComponent',
     components: {
     EmailComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent,
   },
     
     setup() {
