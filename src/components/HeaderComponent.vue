@@ -1,32 +1,27 @@
 <template>
     <header class="header">
-      <div class="container flex justify-between items-center">
-        <h1 class="text-primary text-lg font-bold">Archivio</h1>
-        <button
-          @click="handleLogout"
-          class="logout-btn px-4 py-2 border border-primary text-primary bg-white rounded-large hover:bg-primary hover:text-white transition"
-        >
-          Logout
-        </button>
-      </div>
+     <div class="flex justify-between items-center p-4 bg-primary text-neutralLight">
+      <h1 class="text-xl font-bold">Archivio</h1>
+      <button @click="handleLogout" class="logout-btn px-4 py-2 border border-primary rounded-large text-primary bg-white hover:bg-accent hover:text-white transition">
+        Logout
+      </button>
+    </div>
     </header>
   </template>
-  
   <script>
+  import { useLogout } from '/src/composables/uselogout';
+   
   export default {
-    methods: {
-      handleLogout() {
-        // Logout functionality
-        console.log("Logout clicked");
-      },
-    },
+    setup() {
+      const { logoutUser } = useLogout();
+      return { logoutUser };
+    }
   };
   </script>
   
   <style scoped>
   .header {
     border-bottom: 1px solid #0F456E; /* Thin bottom border */
-    padding: 1rem;
     background-color: #ffffff;
   }
   .container {

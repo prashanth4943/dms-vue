@@ -1,6 +1,7 @@
 <template>
     <div class="file-list-container">
       <RouterLink to="/uploads"><h2>Upload new file</h2></RouterLink>
+      <HeaderComponent/>
       <h2>Uploaded Files</h2>
       <button class="search-toggle-btn" @click="toggleSearchBar">
       {{ searchButtonText }}
@@ -24,7 +25,7 @@
       <!-- Display the list of uploaded files -->
       <div v-if="uploadedFiles">
       <div v-if="uploadedFiles.length > 0" class="file-list">
-        <ul>
+        <!-- <ul>
         <li v-for="file in  paginatedFiles" :key="file.FileID" class="file-item">
           <div class="file-info">
             <div>
@@ -74,13 +75,121 @@
         </div>
           <a :href="file.OCIReference" target="_blank" class="file-link">View File</a>
         </li>
-    </ul>
-    <div v-if="filteredFiles.length" class="pagination">
+    </ul> -->
+    <div class="overflow-auto">
+      <table class="w-full border-collapse border border-neutralDark text-left">
+        <thead class = "bg-neutralDark">
+          <tr class="bg-primary text-neutralLight">
+            <th class="p-4 border border-neutralDark bg-neutralLight text-accent">Sl. No.</th>
+            <th class="p-4 border border-neutralDark">File Name</th>
+            <th class="p-4 border border-neutralDark">File Type</th>
+            <th class="p-4 border border-neutralDark">Upload Time</th>
+            <th class="p-4 border border-neutralDark text-center">Thumbnail</th>
+            <th class="p-4 border border-neutralDark text-center">Select</th>
+            <th class="p-4 border border-neutralDark text-center">Download</th>
+            <th class="p-4 border border-neutralDark text-center">Delete</th>
+            <th class="p-4 border border-neutralDark text-center">Share</th>
+            <!-- <th class="p-4 border border-neutralDark text-center">View</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(file, index) in paginatedFiles"
+            :key="file.FileID"
+            class="hover:bg-neutralDark/20"
+          >
+            <!-- Sl. No. -->
+            <td class="p-4 border border-neutralDark text-center">{{ index + 1 }}</td>
+
+            <!-- File Name -->
+            <td class="p-4 border border-neutralDark">{{ file.FileName }}</td>
+
+            <!-- File Type -->
+            <td class="p-4 border border-neutralDark">{{ file.FileType }}</td>
+
+            <!-- Upload Time -->
+            <td class="p-4 border border-neutralDark">
+              {{ new Date(file.UploadTime).toLocaleString() }}
+            </td>
+
+            <!-- Thumbnail -->
+            <td class="p-4 border border-neutralDark text-center">
+              <div class="thumbnail-container" @click="viewFile(file.FileID)">
+                <img
+                  v-if="fileThumbnails[file.FileID]"
+                  :src="fileThumbnails[file.FileID]"
+                  alt="File Thumbnail"
+                  class=" object-cover rounded-large"
+                />
+                <img
+                  v-else-if="thumbnailErrors[file.FileID]"
+                  src="/default_image.png"
+                  alt="No Thumbnail"
+                  class="w-12 h-12 object-cover rounded-large"
+                />
+                <div v-else class="thumbnail-loader text-text">Loading...</div>
+              </div>
+            </td>
+
+            <!-- Select -->
+            <td class="p-4 border border-neutralDark text-center">
+              <input
+                type="checkbox"
+                :value="file.FileID"
+                v-model="selectedFileIds"
+                :id="file.FileID"
+                class="accent-accent"
+              />
+            </td>
+
+            <!-- Download -->
+            <td class="p-4 border border-neutralDark text-center">
+              <font-awesome-icon
+                :icon="['fas', 'download']"
+                :class="['icon', 'download-icon', { disabled: loadingState[file.FileID] }]"
+                @click="!loadingState[file.FileID] && downloadFile(file.FileID)"
+              />
+            </td>
+
+            <!-- Delete -->
+            <td class="p-4 border border-neutralDark text-center">
+              <font-awesome-icon
+                :icon="['fas', 'trash-alt']"
+                :class="['icon', 'delete-icon', { disabled: loadingState[file.FileID] }]"
+                @click="!loadingState[file.FileID] && deleteFile(file.FileID)"
+              />
+            </td>
+
+            <!-- Share -->
+            <td class="p-4 border border-neutralDark text-center">
+              <font-awesome-icon
+                :icon="['fas', 'share-alt']"
+                :class="['icon', 'share-icon', { disabled: loadingState[file.FileID] }]"
+                @click="!loadingState[file.FileID] && shareFile(file.FileID)"
+              />
+            </td>
+
+            <!-- View -->
+            <!-- <td class="p-4 border border-neutralDark text-center">
+              <a
+                :href="file.OCIReference"
+                target="_blank"
+                class="text-primary underline hover:text-accent"
+              >
+                View File
+              </a>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="filteredFiles.length" class="pagination">
       <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">Prev</button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
       <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
     </div>
       </div>
+    </div>
+   
     </div>
     <div v-else>
     <p>No files uploaded yet.</p>
@@ -100,11 +209,13 @@
   import api from '../utils/api'; // Import the Axios instance or api helper
   import Swal from 'sweetalert2';
   import EmailComponent from './EmailComponent.vue';
+  import HeaderComponent from './HeaderComponent.vue';
   
   export default defineComponent({
     name: 'FileListComponent',
     components: {
     EmailComponent,
+    HeaderComponent
   },
     
     setup() {
@@ -515,7 +626,7 @@
   });
   </script>
   
-  <style scoped>
+  <!-- <style scoped>
   /* File List Container */
   .file-list-container {
     padding: 20px;
@@ -742,4 +853,4 @@
   margin-top: 20px;
 }
   </style>
-  
+   -->
