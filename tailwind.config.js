@@ -21,6 +21,7 @@ export default {
         hurricane:['Hurricane','serif'],
         sans: ['"Playfair Display"', 'serif'], // Thin and Roman serif
         serif: ['"Crimson Text"', 'serif'],  
+        Pattaya:["Pattaya",'serif'],
       },
       borderRadius: {
         DEFAULT: '8px', 

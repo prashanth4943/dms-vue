@@ -4,7 +4,7 @@
 
     <!-- Upload Container -->
     <div class="upload-container max-w-2xl mx-auto mt-8 p-6 bg-white shadow-md border border-primary rounded-large">
-      <h1 class="text-2xl font-serif font-bold mb-4 text-primary">Upload Your Document</h1>
+      <h1 class="text-3xl font-damion font-bold mb-4 text-primary">Upload Your Document</h1>
       <p class="text-text mb-6">
         Drag and drop your file here or click the button below to upload.
       </p>
@@ -18,6 +18,7 @@
         :class="{ 'bg-neutralLight': dragging }"
       >
         <p class="text-neutralDark">Drag & drop your file here</p>
+        <img src="/public/upload.png" alt="" class="w-24 block m-auto">
       </div>
 
       <!-- File Input -->
@@ -28,7 +29,7 @@
       </label> -->
       <label
         for="file-input"
-        class="upload-label inline-block  mt-6 text-center px-6 py-2 border border-primary text-primary bg-white rounded-large hover:bg-primary hover:text-white transition cursor-pointer"
+        class="upload-label inline-block  mt-6 text-center px-6 py-2 border border-primary text-white bg-primary rounded-medium hover:bg-white hover:text-primary transition cursor-pointer"
       >
         Choose File
       </label>
@@ -51,10 +52,10 @@
           <p><strong>File Type:</strong> {{ file.type }}</p>
         </div>
         <div class="flex justify-between mt-4">
-          <button @click="uploadFile(file)" class="upload-btn px-4 py-2 border border-primary text-primary bg-white rounded-large hover:bg-primary hover:text-white transition">
+          <button @click="uploadFile(file)" class="upload-btn px-4 py-2 border border-primary text-white bg-primary hover:bg-white hover:text-primary transition">
             Upload
           </button>
-          <button @click="clearFile" class="cancel-btn px-4 py-2 border border-primary text-primary bg-white rounded-large hover:bg-secondary hover:text-white transition">
+          <button @click="clearFile" class="cancel-btn px-4 py-2 border border-primary text-white bg-primary  hover:bg-white hover:text-primary transition">
             Cancel
           </button>
         </div>
