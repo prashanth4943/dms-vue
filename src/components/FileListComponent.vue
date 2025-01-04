@@ -25,57 +25,6 @@
       <!-- Display the list of uploaded files -->
       <div v-if="uploadedFiles">
       <div v-if="uploadedFiles.length > 0" class="file-list">
-        <!-- <ul>
-        <li v-for="file in  paginatedFiles" :key="file.FileID" class="file-item">
-          <div class="file-info">
-            <div>
-              <strong>File Name:</strong> {{ file.FileName }}
-            </div>
-            <div>
-              <strong>File Type:</strong> {{ file.FileType }}
-            </div>
-            <div>
-              <strong>Upload Time:</strong> {{ new Date(file.UploadTime).toLocaleString() }}
-            </div>
-            <p>{{ loadingState[file.FileID] }}</p>
-          <div class="thumbnail-container" @click="viewFile(file.FileID)">
-            <img
-              v-if="fileThumbnails[file.FileID]"
-              :src="fileThumbnails[file.FileID]"
-              alt="File Thumbnail"
-              class="file-thumbnail"
-            />
-            <img
-              v-else-if="thumbnailErrors[file.FileID]"
-              src="/default_image.png"
-              alt="No Thumbnail"
-              class="file-thumbnail-error"
-            />
-            <div v-else class="thumbnail-loader">Loading...</div>
-            <div class="hover-overlay">Click to View</div>
-        </div>
-          </div>
-          <div>
-            <input type="checkbox" :value="file.FileID" v-model="selectedFileIds" :id="file.FileID"/>
-          <font-awesome-icon
-            :icon="['fas', 'download']"
-            :class="['icon','download-icon',{ disabled: loadingState[file.FileID] }]"
-            @click="!loadingState[file.FileID]  && downloadFile(file.FileID)"
-          />  
-          <font-awesome-icon
-            :icon="['fas', 'trash-alt']"
-            :class="['icon', 'delete-icon', { disabled: loadingState[file.FileID] }]"
-            @click="!loadingState[file.FileID] && deleteFile(file.FileID)"
-          />
-          <font-awesome-icon
-            :icon="['fas', 'trash-alt']"
-            :class="['icon', 'share-icon', { disabled: loadingState[file.FileID] }]"
-            @click="!loadingState[file.FileID] && shareFile(file.FileID)"
-          />
-        </div>
-          <a :href="file.OCIReference" target="_blank" class="file-link">View File</a>
-        </li>
-    </ul> -->
     <div class="overflow-auto">
       <table class="w-full border-collapse border border-neutralDark text-left">
         <thead class = "bg-neutralDark">

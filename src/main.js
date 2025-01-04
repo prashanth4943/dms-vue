@@ -10,11 +10,11 @@ import 'vue-toastification/dist/index.css';
 import Toast from 'vue-toastification';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faDownload, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faShareAlt, faTrashAlt ,faCheck , faEye, faSearch, faUpload, faCheckDouble, faTimesCircle ,  faTimes } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+import 'sweetalert2/dist/sweetalert2.min.css';  
 
-library.add(faDownload, faTrashAlt)
+library.add(faDownload, faTrashAlt , faShareAlt , faCheck , faEye , faSearch , faUpload , faCheckDouble , faTimesCircle , faTimes)
 
 const options = {
     // Optional: Configure options such as position, timeout, etc.
