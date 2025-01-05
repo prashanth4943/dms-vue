@@ -1,93 +1,106 @@
 <template>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <div v-if="filteredFiles.length === 0" class="col-span-full text-center text-gray-500">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  <!-- No Files Message -->
+  <div v-if="filteredFiles.length === 0" class="col-span-full text-center text-gray-500">
     No files matched your search.
   </div>
+
+  <!-- File Card -->
+  <div
+    v-for="file in filteredFiles"
+    :key="file.FileID"
+    class="bg-white shadow rounded-lg overflow-hidden transition-transform transform hover:scale-105 cursor-pointer relative"
+  >
+    <!-- Thumbnail -->
+    <div
+      class="relative bg-gray-100 h-40 flex items-center justify-center cursor-pointer overflow-hidden"
+      @click="toggleSelection(file.FileID)"
+    >
+      <!-- Dim Thumbnail with Checkmark if Selected -->
       <div
-        v-for="file in filteredFiles"
-        :key="file.FileID"
-        class="bg-white shadow rounded-lg overflow-hidden transition-transform transform hover:scale-105 cursor-pointer relative"
+        v-if="selectedFiles.includes(file.FileID)"
+        class="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center z-10"
       >
-        <!-- Thumbnail -->
-        <div
-          class="relative bg-gray-100 h-40 flex items-center justify-center cursor-pointer"
-          @click="toggleSelection(file.FileID)"
-        >
-          <!-- Dim Thumbnail with Checkmark if Selected -->
-          <div
-            v-if="selectedFiles.includes(file.FileID)"
-            class="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center z-10"
-          >
-            <font-awesome-icon :icon="['fas', 'check']" class="text-4xl text-white" />
-          </div>
-  
-          <!-- Thumbnail Image or Placeholder -->
-          <img
-            v-if="file.thumbnail"
-            :src="file.thumbnail"
-            alt="File Thumbnail"
-            class="h-full object-cover"
-            :class="selectedFiles.includes(file.FileID) ? 'opacity-50' : ''"
-          />
-          <div v-else class="text-gray-400" :class="selectedFiles.includes(file.FileID) ? 'opacity-50' : ''">
-            No Thumbnail
-          </div>
-        </div>
-  
-        <!-- File Info -->
-        <div class="p-4 text-center">
-          <h3 class="text-lg font-semibold truncate">{{ file.FileName }}</h3>
-          <p class="text-sm text-gray-500">{{ file.FileType }}</p>
-          <p class="text-sm text-gray-400 mt-1">
-            {{ new Date(file.UploadTime).toLocaleDateString() }}
-          </p>
-        </div>
-  
-        <!-- Actions -->
-        <div class="flex justify-around bg-gray-50 py-2">
-  <!-- Trash Icon -->
-  <font-awesome-icon
-    :icon="['fas', 'trash-alt']"
-    :class="{
-      'text-red-500 text-lg hover:text-red-600 cursor-pointer': !selectedFiles.includes(file.FileID),
-      'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-    }"
-    @click.stop="iconAction(file.FileID, 'trash')"
-  />
-
-  <!-- Share Icon -->
-  <font-awesome-icon
-    :icon="['fas', 'share-alt']"
-    :class="{
-      'text-secondary text-lg hover:text-secondary-dark cursor-pointer': !selectedFiles.includes(file.FileID),
-      'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-    }"
-    @click.stop="iconAction(file.FileID, 'share')"
-  />
-
-  <!-- Eye Icon -->
-  <font-awesome-icon
-    :icon="['fas', 'eye']"
-    :class="{
-      'text-blue-500 text-lg hover:text-blue-600 cursor-pointer': !selectedFiles.includes(file.FileID),
-      'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-    }"
-    @click.stop="iconAction(file.FileID, 'eye')"
-  />
-
-  <!-- Download Icon -->
-  <font-awesome-icon
-    :icon="['fas', 'download']"
-    :class="{
-      'text-green-500 text-lg hover:text-green-600 cursor-pointer': !selectedFiles.includes(file.FileID),
-      'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-    }"
-    @click.stop="iconAction(file.FileID, 'download')"
-  />
-</div>
+        <font-awesome-icon :icon="['fas', 'check']" class="text-4xl text-white" />
       </div>
 
-  
+      <!-- Thumbnail Image or Placeholder -->
+      <div class="thumbnail-container relative w-full h-full">
+        <img
+          v-if="fileThumbnails[file.FileID]"
+          :src="fileThumbnails[file.FileID]"
+          alt="File Thumbnail"
+          class="object-cover w-full h-full"
+        />
+        <div
+          v-else
+          class="text-gray-400 flex items-center justify-center h-full"
+          :class="selectedFiles.includes(file.FileID) ? 'opacity-50' : ''"
+        >
+          No Thumbnail
+        </div>
+
+        <!-- Bottom Shadow for Envelope Effect -->
+        <div
+          v-if="fileThumbnails[file.FileID]"
+          class="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none"
+        ></div>
+      </div>
+    </div>
+
+    <!-- File Info -->
+    <div class="p-4 text-center">
+      <h3 class="text-lg font-semibold truncate">{{ file.FileName }}</h3>
+      <p class="text-sm text-gray-500">{{ file.FileType }}</p>
+      <p class="text-sm text-gray-400 mt-1">
+        {{ new Date(file.UploadTime).toLocaleDateString() }}
+      </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-around bg-gray-50 py-2">
+      <!-- Trash Icon -->
+      <font-awesome-icon
+        :icon="['fas', 'trash-alt']"
+        :class="{
+          'text-red-500 text-lg hover:text-red-600 cursor-pointer': !selectedFiles.includes(file.FileID),
+          'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+        }"
+        @click.stop="deleteFile(file.FileID)"
+      />
+
+      <!-- Share Icon -->
+      <font-awesome-icon
+        :icon="['fa', 'paper-plane']"
+        :class="{
+          'text-secondary text-lg hover:text-secondary-dark cursor-pointer': !selectedFiles.includes(file.FileID),
+          'text-black-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+        }"
+        @click.stop="shareFile(file.FileID)"
+      />
+
+      <!-- Eye Icon -->
+      <font-awesome-icon
+        :icon="['fas', 'eye']"
+        :class="{
+          'text-blue-500 text-lg hover:text-blue-600 cursor-pointer': !selectedFiles.includes(file.FileID),
+          'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+        }"
+        @click.stop="viewFile(file.FileID)"
+      />
+
+      <!-- Download Icon -->
+      <font-awesome-icon
+        :icon="['fas', 'download']"
+        :class="{
+          'text-green-500 text-lg hover:text-green-600 cursor-pointer': !selectedFiles.includes(file.FileID),
+          'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+        }"
+        @click.stop="downloadFile(file.FileID)"
+      />
+    </div>
+  </div>
+</div>
 
     <!-- Search FAB -->
     <div
@@ -97,15 +110,6 @@
     <font-awesome-icon :icon="['fas', searchIcon]" class="text-2xl" />
   </div>
 
-  <!-- Search FAB -->
-  <div
-    class="fixed top-12 right-20 bg-blue-500 text-white rounded-lg p-5 shadow-lg cursor-pointer hover:bg-blue-600 transition"
-    @click="toggleSearch"
-  >
-    <font-awesome-icon :icon="['fas', searchIcon]" class="text-2xl" />
-  </div>
-
-  <!-- Search bar next to the FAB -->
   <div
     v-if="searchOpen"
     class="fixed top-12 right-40 bg-gray-800 text-white flex items-center py-5 px-6 rounded-lg transition-all duration-500 ease-in-out"
@@ -121,20 +125,10 @@
 
 
 
-    <!-- Upload FAB -->
-    <div
-    class="fixed bottom-12 right-20 bg-green-500 text-white rounded-lg p-5 shadow-lg cursor-pointer hover:bg-green-600 transition"
-    @click="openUploadModal"
-    >
-    <font-awesome-icon :icon="['fas', 'upload']" class="text-2xl" />
+     <div>
+    <UploadComponent />
     </div>
 
-    <div
-      v-if="isUploadModalVisible"
-      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
-    ></div>
-
-    </div>
     
 
 <transition
@@ -180,7 +174,11 @@
 </div>
 
   </transition>
-
+  <!-- <UploadModal v-if="isUploadModalVisible" @close="isUploadModalVisible = false" :isOpen="isUploadModalVisible" />
+  <UploadModal 
+      :isOpen="isUploadModalVisible" 
+      @update:isOpen="closeModal" 
+    /> -->
   </template>
   
   <script>
@@ -189,23 +187,30 @@
   import { useToast } from "vue-toastification";
   import api from '../utils/api'; // Import the Axios instance or API helper
   import Swal from 'sweetalert2';
+//   import UploadModal from './UploadModal.vue'; 
+import UploadComponent from './UploadComponent.vue';
   
   export default defineComponent({
     name: 'FileListComponent2',
+    components: {
+    // UploadModal,
+    UploadComponent,
+  },
     setup() {
       const userStore = useUserStore();
       const toast = useToast();
       const selectedFiles = ref([]);
+      const selectedFileID = ref(null)
       const hasSelectedFiles = computed(() => selectedFiles.value.length > 0);
       const selectedCount = computed(() => selectedFiles.value.length);
       const uploadedFiles = computed(() => userStore.uploadedFiles);
       const displayedFiles = ref([]);
-    //   const searchQuery = ref('');
       const showSearchBar = ref(false);
       const searchButtonText = ref("Show Search");
       const currentPage = ref(1);
       const pageSize = 20;
       const loading = ref(false);
+      const loadingState = ref({});
       const searchOpen = ref(false);
     const searchQuery = ref('');
     const searchIcon = ref('search');
@@ -281,7 +286,9 @@
       searchOpen.value = false;
       searchIcon.value = 'search';
     };
-
+    const openUploadModal = () =>{
+        isUploadModalVisible.value = true; // Show the UploadModal
+    }
 
     const filteredFiles = computed(() => {
         if (!searchQuery.value) {
@@ -313,27 +320,211 @@
         }
       };
   
-      const viewFile = (fileId) => {
-        console.log(`View file with ID: ${fileId}`);
-      };
+      const viewFile = async (fileID) => {
+  try {
+    // Show a loading Swal while fetching the file
+    Swal.fire({
+      title: "Loading...",
+      text: "Please wait while we fetch the file.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    // Fetch the file data as a Blob
+    const response = await api.get(`/getPreview/${fileID}`, {
+      responseType: "blob",
+    });
+    const fileBlob = response.data;
+    const fileURL = URL.createObjectURL(fileBlob);
+
+    // Show the file preview in a scrollable Swal
+    Swal.fire({
+      html: `
+        <div style="max-height: 70vh; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+          <iframe 
+            src="${fileURL}" 
+            style="width: 100%; height: 600px;" 
+            frameborder="0">
+          </iframe>
+        </div>`,
+      showCloseButton: true,
+      showConfirmButton: false,
+      width: "60%",
+      heightAuto: false,
+      customClass: {
+        popup: "scrollable-preview",
+      },
+    });
+  } catch (error) {
+    Swal.fire("Error", "Unable to fetch the file.", "error");
+  }
+};
+
   
-      const downloadFile = (fileId) => {
-        console.log(`Download file with ID: ${fileId}`);
-      };
-  
-      const deleteFile = async (fileId) => {
-        try {
-          await api.delete(`/deleteFile/${fileId}`);
-          userStore.setUploadedFiles(uploadedFiles.value.filter(file => file.FileID !== fileId));
-          toast.success("File deleted successfully");
-        } catch (error) {
-          console.error(`Error deleting file ${fileId}:`, error);
-          toast.error("Failed to delete file");
+      const downloadFile = async (fileID) => {
+        console.log("vnbvbvbnv")
+        console.log(loadingState.value['42b6cacf-9c70-436f-a121-f0e44f3e5f5a'])
+        console.log("Asdasdasdad")
+        console.log(loadingState.value[fileID])
+      if (loadingState.value[fileID]) return;
+      console.log(fileID)
+      loadingState.value[fileID] = true;
+      console.log("lkjkjlkjlk")
+      console.log(loadingState.value[fileID])
+      try {
+        const response = await api.get(`/downloadFile/${fileID}`, {
+          responseType: "blob",
+          onDownloadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            console.log(`Download progress: ${percentCompleted}%`);
+          },
+        });
+        console.log(response.headers);
+        const contentDisposition = response.headers["content-disposition"];
+        const contentDisposition2 = response.headers["Content-Disposition"];
+        console.log(contentDisposition)
+        console.log(contentDisposition2)
+        const trimmedFileID = fileID.slice(0, 10);
+        let fileName = `file_${trimmedFileID}_${new Date().getTime()}`;
+        if (contentDisposition) {
+          const match = contentDisposition.match(/filename="(.+)"/);
+          if (match && match[1]) {
+            fileName = match[1];
+          }
         }
-      };
+
+        const blob = new Blob([response.data], {
+          type: response.headers["content-type"],
+        });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        toast.success("File downloaded successfully!");
+      } catch (error) {
+        console.error("Error downloading file:", error);
+        toast.error("Failed to download file.");
+      }finally {
+        loadingState.value[fileID] = false;
+      }
+    };
   
-      const shareFile = (fileId) => {
-        console.log(`Share file with ID: ${fileId}`);
+      const deleteFile = async (fileID) => {
+    if (loadingState.value[fileID]) return;
+    loadingState.value[fileID] = true;
+
+    const result = await Swal.fire({
+      title: 'Confirm Deletion',
+      text: 'Are you sure you want to delete this file? This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      // customClass: {
+      //   popup: 'custom-popup',
+      //   title: 'custom-title',
+      //   confirmButton: 'custom-confirm-button',
+      //   cancelButton: 'custom-cancel-button',
+      // },
+    });
+
+    if (!result.isConfirmed) {
+      loadingState.value[fileID] = false;
+      return;
+    }
+
+    try {
+      const response = await api.delete(`/deleteFile/${fileID}`);
+      if (response.data.success) {
+        userStore.setUploadedFiles(
+          userStore.uploadedFiles.filter((file) => file.FileID !== fileID)
+        );
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: 'The file has been deleted successfully.',
+          timer: 3000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed!',
+        text: 'An error occurred while trying to delete the file.',
+      });
+    } finally {
+      loadingState.value[fileID] = false;
+    }
+  };
+  
+  const shareFile = (fileID) => {
+        selectedFileID.value = fileID;
+   
+        // Open SweetAlert2 modal
+        Swal.fire({
+            title: 'Send Email',
+            html: `
+                <div class="flex flex-col gap-4">
+                <div>
+                    <label for="to" class="block text-gray-700 text-sm font-bold mb-2">Recipient Email:</label>
+                    <input id="to" type="email" class="swal2-input border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter email">
+                </div>
+                <div>
+                    <label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Subject:</label>
+                    <input id="subject" type="text" class="swal2-input border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter subject">
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message (Optional):</label>
+                    <textarea id="message" class="swal2-textarea border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter message"></textarea>
+                </div>
+                </div>
+            `,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: `<span class="px-4 py-2 text-white rounded-lg hover:bg-yellow-600">Send</span>`,
+            cancelButtonText: `<span class="px-4 py-2  text-white rounded-lg hover:bg-gray-600">Cancel</span>`,
+            customClass: {
+                popup: 'p-6 bg-white rounded-lg shadow-md',
+                title: 'text-xl font-bold text-gray-700',
+            },
+          preConfirm: () => {
+            const to = document.getElementById('to').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+   
+            if (!to || !subject) {
+              Swal.showValidationMessage('Recipient Email and Subject are required!');
+              return false;
+            }
+   
+            return { to, subject, message };
+          },
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const { to, subject, message } = result.value;
+              await api.post('/SendEmail', {
+                to,
+                subject,
+                message,
+                fileID: selectedFileID.value,
+              });
+              Swal.fire('Success', 'Email sent successfully!', 'success');
+            } catch (error) {
+              Swal.fire('Error', 'Failed to send email.', 'error');
+            }
+          }
+        });
       };
   
       const fetchUploadedFiles = async () => {
@@ -418,9 +609,15 @@
         enter,
         leave,
         searchOpen,
+        fileThumbnails,
+        fetchThumbnail,
       searchIcon,
       toggleSearch,
       closeSearch,
+      openUploadModal,
+      loadingState,
+      shareFile,
+      selectedFileID,
       }  
     }
 });

@@ -7,29 +7,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0F456E',
-        secondary: '#A1A291',
-        neutralLight: '#EAE6D8',
-        neutralDark: '#C7C9DB',
-        accent: '#D1AD74',
-        text: '#5C534D',
+        primary: '#002B5B', // Deep dark blue for a strong base
+        secondary: '#FFFBEA', // Soft, creamy white with a hint of yellow
+        neutralLight: '#FAF9F6', // Very light, almost white background
+        neutralDark: '#475569', // Muted blue-grey for subtle text and borders
+        accent: '#FFD700', // Bold and vibrant gold-yellow for accents
+        text: '#3D3D3D', // Neutral dark grey for readable text
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Lora', 'serif'],
-        damion: ['"Damion"', 'cursive'],
-        hurricane:['Hurricane','serif'],
-        sans: ['"Playfair Display"', 'serif'], // Thin and Roman serif
-        serif: ['"Crimson Text"', 'serif'],  
-        Pattaya:["Pattaya",'serif'],
+        sans: ['Outfit', 'sans-serif'], // Clean, modern sans-serif
+        serif: ['Poppins', 'serif'], // Elegant serif for headings
+        display: ['Kanit', 'sans-serif'], // Slightly quirky for highlights
       },
       borderRadius: {
-        DEFAULT: '8px', 
-        large: '12px',  
+        DEFAULT: '6px', // Softer curves for modern feel
+        large: '10px',  
+        pill: '50px', // Rounded pill shape for buttons or badges
       },
       backgroundImage: {
         'hero-pattern': "url('/bg-img.jpg')",
-      }
+      },
+      spacing: {
+        '72': '18rem', // Larger spacings for modern layouts
+        '80': '20rem',
+        '96': '24rem',
+      },
     },
   },
   plugins: [],

@@ -1,17 +1,34 @@
 <template>
-    <header class="header">
-     <div class="flex justify-between items-center p-4 bg-primary text-neutralLight">
-      <h1 class="text-xl font-bold">Archivio</h1>
-      <button @click="handleLogout" class="logout-btn px-4 py-2 border border-primary rounded-large text-primary bg-white hover:bg-accent hover:text-white transition">
-        Logout
-      </button>
-    </div>
+    <header class="bg-accent text-primary shadow-md">
+      <div class="flex justify-between items-center p-6">
+        <!-- App Name -->
+        <h1 class="text-4xl font-serif font-bold tracking-tight">Archivio</h1>
+  
+        <vue-text-marquee
+      :speed="30"
+      :pause-on-hover="true"
+      class="text-lg font-medium"
+    >
+      Welcome to Archivio! | Stay organized effortlessly! | Modern file management system!
+    </vue-text-marquee>
+        <!-- Logout Option -->
+        <a 
+          href="#" 
+          @click.prevent="logoutUser" 
+          class="text-neutralDark hover:text-primary text-lg font-sans font-medium transition"
+        >
+          Logout
+        </a>
+      </div>
     </header>
   </template>
+  
   <script>
   import { useLogout } from '/src/composables/uselogout';
-   
+  import VueTextMarquee from 'vue-text-marquee';
+  
   export default {
+    components: { VueTextMarquee },
     setup() {
       const { logoutUser } = useLogout();
       return { logoutUser };
@@ -21,12 +38,7 @@
   
   <style scoped>
   .header {
-    border-bottom: 1px solid #0F456E; /* Thin bottom border */
-    background-color: #ffffff;
-  }
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    border-bottom: 1px solid #E9ECEF; /* Subtle border for clean separation */
   }
   </style>
   

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import router from '../routes/index'; // Import your Vue Router instance
 
 // Create an Axios instance
@@ -16,9 +17,21 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Handle session invalidation (e.g., redirect to login page)
-      alert('Your session has expired. Please log in again.');
-      router.push('/'); // Redirect to login or root route
+      // Fire a Swal for session expiration
+      Swal.fire({
+        icon: 'warning',
+        title: 'Session Expired',
+        text: 'Your session has expired. Redirecting to login...',
+        timer: 3000, // Automatically close after 3 seconds
+        showConfirmButton: false, // Disable OK button
+        timerProgressBar: true, // Show a progress bar during the timer
+      }).then(() => {
+        // Redirect to the login or root route after the Swal closes
+        router.push('/');
+      });
+
+      // You can also immediately push to '/' to ensure redirection, without waiting for Swal to close:
+      // setTimeout(() => router.push('/'), 3000);
     }
     // Forward other errors
     return Promise.reject(error);

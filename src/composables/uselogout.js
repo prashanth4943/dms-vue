@@ -22,9 +22,10 @@ export function useLogout() {
           title: 'Logged out successfully',
           showConfirmButton: false,
           timer: 1500
+        }).then(() => {
+          userStore.reset();
+          router.push('/');
         });
-        userStore.reset(); 
-        router.push('/');
       } else {
         Swal.fire({
           icon: 'error',

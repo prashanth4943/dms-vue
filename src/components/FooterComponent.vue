@@ -1,23 +1,14 @@
 <template>
-    <footer class="footer">
-      <div class="container text-center">
-        <p class="text-sm text-neutralDark">
-          &copy; 2025 Archivio. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <footer class="footer"></footer>
   </template>
   
   <style scoped>
   .footer {
-    border-top: 1px solid #0F456E; /* Thin top border */
-    padding: 1rem;
-    background-color: #ffffff;
+    color: #FFD700;
+    border-top: 1px solid #FFD700; /* Thin and subtle border */
+    height: 1rem; /* Minimal height */
+    background-color: #ffffff; /* Clean white background */
     margin-top: auto; /* Sticks to the bottom when content is short */
-  }
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
   }
   </style>
   
