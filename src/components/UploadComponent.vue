@@ -5,23 +5,29 @@
       @dragleave.prevent="onDragLeave"
       @drop.prevent="onDrop"
     >
-      <div
-        class="flex justify-center items-center bg-green-500 text-white rounded-full p-8 shadow-lg cursor-pointer hover:bg-green-600 transition relative"
-        :class="{ 'ring-4 ring-green-300': isDragging }"
-        @click="triggerFilePicker"
-      >
-        <font-awesome-icon :icon="['fas', 'upload']" class="text-4xl" />
-      </div>
-      <span class="text-sm text-gray-500">Drag & drop here or click to upload</span>
-  
-      <!-- Hidden file input -->
-      <input
-        ref="fileInput"
-        type="file"
-        class="hidden"
-        @change="handleFileSelect"
-        accept="image/jpeg,image/png,application/pdf"
-      />
+    <div
+  class="flex justify-center items-center text-white cursor-pointer hover:green-300 transition relative"
+  :class="{ 'ring-4 ring-green-300': isDragging }"
+  @click="triggerFilePicker"
+>
+  <!-- Image -->
+  <img src="/public/dragndrop2.png" alt="Drag and drop" class="w-32 h-29" />
+
+  <!-- White Overlay (with opacity) -->
+  <div class="absolute inset-0 bg-white opacity-0 hover:opacity-50 transition-opacity duration-300"></div>
+</div>
+
+<!-- <span class="text-sm text-gray-500">Drag & drop here or click to upload</span> -->
+
+<!-- Hidden file input -->
+<input
+  ref="fileInput"
+  type="file"
+  class="hidden"
+  @change="handleFileSelect"
+  accept="image/jpeg,image/png,application/pdf"
+/>
+
   
       <!-- Modal Preview -->
       <div

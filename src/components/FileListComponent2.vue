@@ -60,68 +60,70 @@
     <!-- Actions -->
     <div class="flex justify-around bg-gray-50 py-2">
       <!-- Trash Icon -->
-      <font-awesome-icon
-        :icon="['fas', 'trash-alt']"
-        :class="{
-          'text-red-500 text-lg hover:text-red-600 cursor-pointer': !selectedFiles.includes(file.FileID),
-          'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-        }"
-        @click.stop="deleteFile(file.FileID)"
-      />
+<font-awesome-icon
+  :icon="['fas', 'trash-alt']"
+  :class="{
+    'text-gray-700 text-md hover:text-red-600 cursor-pointer': !selectedFiles.includes(file.FileID),
+    'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+  }"
+  @click.stop="deleteFile(file.FileID)"
+/>
 
-      <!-- Share Icon -->
-      <font-awesome-icon
-        :icon="['fa', 'paper-plane']"
-        :class="{
-          'text-secondary text-lg hover:text-secondary-dark cursor-pointer': !selectedFiles.includes(file.FileID),
-          'text-black-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-        }"
-        @click.stop="shareFile(file.FileID)"
-      />
+<!-- Share Icon -->
+<font-awesome-icon
+  :icon="['fa', 'paper-plane']"
+  :class="{
+    'text-gray-700 text-md hover:text-secondary-dark cursor-pointer': !selectedFiles.includes(file.FileID),
+    'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+  }"
+  @click.stop="shareFile(file.FileID)"
+/>
 
-      <!-- Eye Icon -->
-      <font-awesome-icon
-        :icon="['fas', 'eye']"
-        :class="{
-          'text-blue-500 text-lg hover:text-blue-600 cursor-pointer': !selectedFiles.includes(file.FileID),
-          'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-        }"
-        @click.stop="viewFile(file.FileID)"
-      />
+<!-- Eye Icon -->
+<font-awesome-icon
+  :icon="['fas', 'eye']"
+  :class="{
+    'text-gray-700 text-md hover:text-blue-600 cursor-pointer': !selectedFiles.includes(file.FileID),
+    'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+  }"
+  @click.stop="viewFile(file.FileID)"
+/>
 
-      <!-- Download Icon -->
-      <font-awesome-icon
-        :icon="['fas', 'download']"
-        :class="{
-          'text-green-500 text-lg hover:text-green-600 cursor-pointer': !selectedFiles.includes(file.FileID),
-          'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
-        }"
-        @click.stop="downloadFile(file.FileID)"
-      />
+<!-- Download Icon -->
+<font-awesome-icon
+  :icon="['fas', 'download']"
+  :class="{
+    'text-gray-700 text-md hover:text-green-600 cursor-pointer': !selectedFiles.includes(file.FileID),
+    'text-gray-400 cursor-not-allowed pointer-events-none': selectedFiles.includes(file.FileID),
+  }"
+  @click.stop="downloadFile(file.FileID)"
+/>
+
     </div>
   </div>
 </div>
 
     <!-- Search FAB -->
     <div
-    class="fixed top-12 right-20 bg-blue-500 text-white rounded-lg p-5 shadow-lg cursor-pointer hover:bg-blue-600 transition"
+    class="fixed top-20 right-32 bg-yellow-300 text-white rounded-lg p-5 shadow-lg cursor-pointer hover:bg-yellow-400 transition"
     @click="toggleSearch"
   >
     <font-awesome-icon :icon="['fas', searchIcon]" class="text-2xl" />
   </div>
 
   <div
-    v-if="searchOpen"
-    class="fixed top-12 right-40 bg-gray-800 text-white flex items-center py-5 px-6 rounded-lg transition-all duration-500 ease-in-out"
-    style="width: 250px;"
-  >
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Enter here..."
-      class="w-full bg-transparent border-none outline-none text-white placeholder-white"
-    />
-  </div>
+  v-if="searchOpen"
+  class="fixed top-20 right-44 bg-black-800 text-white flex items-center py-5 px-6 rounded-lg transition-all duration-500 ease-in-out"
+  style="width: 400px;"
+>
+  <input
+    v-model="searchQuery"
+    type="text"
+    placeholder="Search here..."
+    class="w-full h-12 bg-white border-2 border-white rounded-sm outline-none text-black placeholder-gray-300 focus:ring-2 focus:ring-yellow-400"
+  />
+</div>
+
 
 
 

@@ -25,7 +25,8 @@ export default {
         pill: '50px', // Rounded pill shape for buttons or badges
       },
       backgroundImage: {
-        'hero-pattern': "url('/bg-img.jpg')",
+        // 'hero-pattern': "url('/bg-img.jpg')",
+        'hero-pattern': "url('/yellowbg1.png')",
       },
       spacing: {
         '72': '18rem', // Larger spacings for modern layouts
