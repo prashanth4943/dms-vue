@@ -12,8 +12,8 @@
           <li class="text-[#E0B800] flex justify-center items-center">#simplicity</li>
           <li class="text-[#E0B800] flex justify-center items-center">#lightweight</li>
           <li class="text-[#E0B800] flex justify-center items-center">#secured</li>
-          <li class="text-[#E0B800] flex justify-center items-center">#minimalistic</li>
         </ul>
+        <li class="text-[#E0B800] flex justify-center items-center text-[2rem] md:text-[3rem]">#minimalistic</li>
 
         <!-- Description with adjusted text size and dim blue color -->
         <p class="text-lg text-white mb-8">
