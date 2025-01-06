@@ -1,73 +1,96 @@
 <template>
-  <section class="flex flex-col justify-center bg-hero-pattern bg-center h-screen transition-opacity duration-300">
-  <div class="grid grid-cols-2 gap-4">
-    <div class="flex flex-col justify-center">
-        <h2 class="p-6 max-w-sm mx-auto gap-x-4 font-semibold text-8xl font-damion">
+  <section class="flex flex-col justify-center bg-[#FFD700] h-screen transition-opacity duration-300">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-6">
+      <!-- Left Column - Text and Description -->
+      <div class="flex flex-col justify-start text-[#002B5B] p-6 md:pl-16">
+        <!-- Archivio Title -->
+        <h2 class="font-semibold text-serif text-[6rem] md:text-[8rem] font-damion mb-4 leading-tight">
           Archivio
-      </h2>
-      <p class="text-white font-semibold text-xl font-hurricane">
-        Your all-in-one platform to securely manage, organize, and access your documents
-        anytime, anywhere. We strive to make document management effortless for you!
-      </p>
-    </div>
-    <div class="">
-      <div class="form-container">
+        </h2>
+        
+        <!-- Description with adjusted text size and dim blue color -->
+        <p class="text-xl md:text-2xl text-[#6B7D8D] mb-8">
+          Your all-in-one platform to securely manage, organize, and access your documents anytime, anywhere.
+          We strive to make document management effortless for you!
+        </p>
+        
+        <!-- Hashtags as a list without dots, in dim yellow color -->
+        <ul class="space-y-4 text-[2rem] md:text-[3rem] list-none pl-0">
+          <li class="text-[#E0B800]">#simplicity</li>
+          <li class="text-[#E0B800]">#lightweight</li>
+          <li class="text-[#E0B800]">#secured</li>
+          <li class="text-[#E0B800]">#minimalistic</li>
+        </ul>
+      </div>
+
+      <!-- Right Column - Login Form -->
+      <div class="flex items-center justify-center">
+        <div class="form-container bg-white shadow-lg rounded-lg p-8 w-full sm:w-4/5 md:w-1/2 z-10">
           <form @submit.prevent="handleSubmit">
             <div v-if="isSignup">
-              <div class="form-group">
+              <div class="form-group mb-4">
                 <input
                   type="text"
                   id="firstName"
                   v-model="formData.firstName"
                   required
                   placeholder="Enter your first name"
+                  class="w-full p-3 border border-gray-300 rounded-md"
                 />
               </div>
-
-              <div class="form-group">
+              <div class="form-group mb-4">
                 <input
                   type="text"
                   id="lastName"
                   v-model="formData.lastName"
                   required
                   placeholder="Enter your last name"
+                  class="w-full p-3 border border-gray-300 rounded-md"
                 />
               </div>
             </div>
-            <div class="form-group">
+
+            <div class="form-group mb-4">
               <input
                 type="email"
                 id="email"
                 v-model="formData.email"
                 required
                 placeholder="Enter your email"
+                class="w-full p-3 border border-gray-300 rounded-md"
               />
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-4">
               <input
                 type="password"
                 id="password"
                 v-model="formData.password"
                 required
                 placeholder="Enter your password"
+                class="w-full p-3 border border-gray-300 rounded-md"
               />
             </div>
 
             <!-- Show additional fields for signup -->
-            <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+            <p v-if="errorMessage" class="error-message text-red-500 text-sm mb-4">{{ errorMessage }}</p>
 
-            <button type="submit" class="bg-accent w-full mb-4 mt-4">{{ isSignup ? 'Sign Up' : 'Login' }}</button>
+            <button
+              type="submit"
+              class="bg-[#002B5B] text-white w-full mb-4 mt-4 p-3 rounded-md hover:bg-[#1a3a7d]"
+            >
+              {{ isSignup ? 'Sign Up' : 'Login' }}
+            </button>
 
-            <p class="toggle-mode text-white">
+            <p class="text-[#002B5B] text-center">
               {{ isSignup ? 'Already have an account?' : "Don't have an account?" }}
-              <span class="cursor-pointer" @click="toggleMode">{{ isSignup ? 'Login' : 'Sign up' }}</span>
+              <span class="cursor-pointer font-semibold" @click="toggleMode">{{ isSignup ? 'Login' : 'Sign up' }}</span>
             </p>
           </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 </template>
 
 <script>
@@ -140,7 +163,7 @@ export default {
   }
 };
 </script>
-
+<!-- 
   <style scoped>
   .form-container {
     max-width: 500px;
@@ -193,4 +216,4 @@ export default {
   margin-top: 10px;
 }
   </style>
-  
+   -->

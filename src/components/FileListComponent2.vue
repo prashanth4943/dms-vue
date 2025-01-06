@@ -119,8 +119,8 @@
   <input
     v-model="searchQuery"
     type="text"
-    placeholder="Search here..."
-    class="w-full h-12 bg-white border-2 border-white rounded-sm outline-none text-black placeholder-gray-300 focus:ring-2 focus:ring-yellow-400"
+    placeholder=" Search here..."
+    class="w-full h-12 bg-white border-2 border-grey-700 rounded-md outline-none text-black placeholder-gray-300 focus:ring-2 focus:ring-yellow-400"
   />
 </div>
 
