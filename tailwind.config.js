@@ -18,6 +18,7 @@ export default {
         sans: ['Outfit', 'sans-serif'], // Clean, modern sans-serif
         serif: ['Poppins', 'serif'], // Elegant serif for headings
         display: ['Kanit', 'sans-serif'], // Slightly quirky for highlights
+        logo:['Sacramento','serif']
       },
       borderRadius: {
         DEFAULT: '6px', // Softer curves for modern feel

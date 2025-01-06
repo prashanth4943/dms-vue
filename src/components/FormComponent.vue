@@ -4,28 +4,30 @@
       <!-- Left Column - Text and Description -->
       <div class="flex flex-col justify-start text-[#002B5B] p-6 md:pl-16">
         <!-- Archivio Title -->
-        <h2 class="font-semibold text-serif text-[6rem] md:text-[8rem] font-damion mb-4 leading-tight">
-          Archivio
+        <h2 class="font-logo text-[6rem] md:text-[8rem] font-damion mb-4 leading-tight">
+          Archi<span class="text-white">vio</span>
         </h2>
         
+        <ul class="flex items-baseline space-y-4 text-[2rem] md:text-[3rem] list-none pl-0">
+          <li class="text-[#E0B800] flex justify-center items-center">#simplicity</li>
+          <li class="text-[#E0B800] flex justify-center items-center">#lightweight</li>
+          <li class="text-[#E0B800] flex justify-center items-center">#secured</li>
+          <li class="text-[#E0B800] flex justify-center items-center">#minimalistic</li>
+        </ul>
+
         <!-- Description with adjusted text size and dim blue color -->
-        <p class="text-xl md:text-2xl text-[#6B7D8D] mb-8">
+        <p class="text-lg text-white mb-8">
           Your all-in-one platform to securely manage, organize, and access your documents anytime, anywhere.
           We strive to make document management effortless for you!
         </p>
         
         <!-- Hashtags as a list without dots, in dim yellow color -->
-        <ul class="space-y-4 text-[2rem] md:text-[3rem] list-none pl-0">
-          <li class="text-[#E0B800]">#simplicity</li>
-          <li class="text-[#E0B800]">#lightweight</li>
-          <li class="text-[#E0B800]">#secured</li>
-          <li class="text-[#E0B800]">#minimalistic</li>
-        </ul>
+       
       </div>
 
       <!-- Right Column - Login Form -->
       <div class="flex items-center justify-center">
-        <div class="form-container bg-white shadow-lg rounded-lg p-8 w-full sm:w-4/5 md:w-1/2 z-10">
+        <div class="form-container bg-white shadow-lg rounded-lg p-8 w-full sm:w-4/5 md:w-1/1 z-10">
           <form @submit.prevent="handleSubmit">
             <div v-if="isSignup">
               <div class="form-group mb-4">

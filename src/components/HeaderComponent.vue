@@ -2,7 +2,7 @@
     <header class="bg-accent text-primary shadow-md">
       <div class="flex justify-between items-center p-6">
         <!-- App Name -->
-        <h1 class="text-4xl font-serif font-bold tracking-tight">Archivio</h1>
+        <h1 class="text-4xl font-logo font-bold tracking-tight">Archivio</h1>
   
         <vue-text-marquee
       :speed="30"
